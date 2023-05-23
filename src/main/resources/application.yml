@@ -1,0 +1,19 @@
+eureka:
+  instance:
+    instance-id: =${spring.application.name}:${spring.application.instance_id:${random.value}}
+server:
+  port: ${PORT:0}
+spring:
+  application:
+    name: castores-service-remolques-inventarios
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  datasource:
+    url: jdbc:sqlserver://10.3.1.53;databaseName=castoresdbtest
+    username: UserDesarrollo
+    password: Castores.2020
+  jackson:
+      time-zone: America/Mexico_City
+      locale: es_ES
+     
