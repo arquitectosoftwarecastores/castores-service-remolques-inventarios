@@ -1,4 +1,4 @@
-# castores-service-inventarios
+# castores-service-remolques-inventarios
 
 ## Versión: 0.0.0.0
 - __Ticket/Proyecto:__ N/A
