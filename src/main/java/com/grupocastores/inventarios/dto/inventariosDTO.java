@@ -2,6 +2,8 @@ package com.grupocastores.inventarios.dto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -12,7 +14,8 @@ public class inventariosDTO {
 	
 	private int id;
 	private String description;
-	private Date createddate;
+	@Column(name = "createddate")
+	private Date createdDate;
 	private Date lastModifiedTime;
 	private Boolean isActive;
 
@@ -33,7 +36,7 @@ public class inventariosDTO {
 		this.id = id;
 		this.description = description;
 		this.isActive = isActive;
-		this.createddate = createddate;
+		this.createdDate = createddate;
 		this.lastModifiedTime = lastModifiedTime;		
 	}	
 	@Override
@@ -42,7 +45,7 @@ public class inventariosDTO {
 		strBuilder.append("inventarios [id=").append(id)
 		.append(", description=").append(description)
 		.append(", isActive=").append(isActive)	
-		.append(", createddate").append(createddate)
+		.append(", createddate").append(createdDate)
 		.append(", lastModifiedTime").append(lastModifiedTime);
 		return strBuilder.toString();
 	}

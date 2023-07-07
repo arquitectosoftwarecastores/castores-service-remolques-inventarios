@@ -83,12 +83,12 @@ public class InventarioServiceImpl implements IInventarioService {
 
 	@Override
 	public List<EstatusRemolque> findAllEstatusRemolque() {
-		return inventarioRepository.findAllEstatus1();
+		return inventarioRepository.findAllEstatusRemolque();
 	}
 	
 	@Override
 	public List<EstatusInventario> findAllEstatusInventario() {
-		return inventarioRepository.findAllEstatus2();
+		return inventarioRepository.findAllEstatusInventario();
 	}
 
 	@Override

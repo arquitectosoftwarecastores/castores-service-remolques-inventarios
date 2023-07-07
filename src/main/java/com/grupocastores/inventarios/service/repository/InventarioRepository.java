@@ -28,30 +28,30 @@ public interface InventarioRepository extends JpaRepository<Inventarios, Long> {
 
 	public Inventarios findByIdRemolque(int idRemolque);
 	
-	@Query(value = "select * from remolques_inventarios u where u.folio = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM remolques_inventarios u WHERE u.folio = ?1", nativeQuery = true)
 	public Inventarios findByRemolque(String folio);
 
-	@Query(value = "select u from remolques_inventarios u where u.idRemolque=?1", nativeQuery = true)
+	@Query(value = "SELECT u FROM remolques_inventarios u WHERE u.idRemolque=?1", nativeQuery = true)
 	public Inventarios findByIdRemolque2(int idRemolque);
 	
-	@Query(value = "select * from remolques_inventarios u where u.numremolque = ?1 and estatus_id = 1", nativeQuery = true)
+	@Query(value = "SELECT * FROM remolques_inventarios u WHERE u.numremolque = ?1 AND estatus_id = 1", nativeQuery = true)
 	public Inventarios findByNumRemolque(String numRemolque);
 
-	@Query(value = "select * from remolques_inventarios u where u.clave = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM remolques_inventarios u WHERE u.clave = ?1", nativeQuery = true)
 	public List<Inventarios> findByClaveRemolque(String clave);
 
-	@Query("from Ingreso")
+	@Query("FROM Ingreso")
 	public List<Ingreso> findAllIngreso();
 
-	@Query("from Estatus")
+	@Query("FROM Estatus")
 	public List<Estatus> findAllEstatus();
 	
-	@Query("from Tarjeta")
+	@Query("FROM Tarjeta")
 	public List<Tarjeta> findAllTarjeta();
 	
-	@Query("from EstatusRemolque")
-	public List<EstatusRemolque> findAllEstatus1();
+	@Query("FROM EstatusRemolque")
+	public List<EstatusRemolque> findAllEstatusRemolque();
 	
-	@Query("from EstatusInventario")
-	public List<EstatusInventario> findAllEstatus2();
+	@Query("FROM EstatusInventario")
+	public List<EstatusInventario> findAllEstatusInventario();
 }

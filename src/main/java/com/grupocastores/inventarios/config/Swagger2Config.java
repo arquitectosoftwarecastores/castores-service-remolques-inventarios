@@ -31,7 +31,7 @@ public class Swagger2Config {
                 .description("Documentation and client for inventarios")
                 .termsOfServiceUrl("Castores-TI")
                 .license("com.grupocastores")
-                .version("0.0.1.0")
+                .version("1.0.0.0")
                 .build();
     }
 }

@@ -64,7 +64,7 @@ public class InventarioController {
 	 * @return
 	 */
 	@GetMapping("/inventarios")
-	public List<Inventarios> index() {
+	public List<Inventarios> lstInventarios() {
 		return inventarioService.findAll();
 	}
 
@@ -145,13 +145,13 @@ public class InventarioController {
 	@GetMapping("/inventarios/clave/{clave}")
 	public ResponseEntity<?> show(@PathVariable String clave) {
 		Map<String, Object> response = new HashMap<>();
-		List<Inventarios> listaInventarios = new ArrayList<>();
+		List<Inventarios> lstInventarios = new ArrayList<>();
 
 		try {
 			if (clave.equals("1100")) {
-				listaInventarios = inventarioService.findAll();
+				lstInventarios = inventarioService.findAll();
 			} else {
-				listaInventarios = inventarioService.findByClaveRemolque(clave);
+				lstInventarios = inventarioService.findByClaveRemolque(clave);
 			}
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
@@ -159,7 +159,7 @@ public class InventarioController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<>(listaInventarios, HttpStatus.OK);
+		return new ResponseEntity<>(lstInventarios, HttpStatus.OK);
 	}
 
 	/**
@@ -182,10 +182,10 @@ public class InventarioController {
 		Inventarios newRemolque = null;
 		Map<String, Object> response = new HashMap<>();
 		if (result.hasErrors()) {
-			List<String> errors = result.getFieldErrors().stream().map(err -> {
+			List<String> lstErrors = result.getFieldErrors().stream().map(err -> {
 				return "El campo '" + err.getField() + "' " + err.getDefaultMessage();
 			}).collect(Collectors.toList());
-			response.put("errors", errors);
+			response.put("errors", lstErrors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		try {
@@ -221,7 +221,7 @@ public class InventarioController {
 	 * @return
 	 */
 	@GetMapping("/inventarios/ingreso")
-	public List<Ingreso> listarIngreso() {
+	public List<Ingreso> lstIngreso() {
 		return inventarioService.findAllIngreso();
 	}
 
@@ -230,7 +230,7 @@ public class InventarioController {
 	 * @return
 	 */
 	@GetMapping("/inventarios/estatus")
-	public List<Estatus> listarEstatus() {
+	public List<Estatus> lstEstatus() {
 		return inventarioService.findAllEstatus();
 	}
 
@@ -239,7 +239,7 @@ public class InventarioController {
 	 * @return
 	 */
 	@GetMapping("/inventarios/tarjeta")
-	public List<Tarjeta> listarTarjeta() {
+	public List<Tarjeta> lstTarjeta() {
 		return inventarioService.findAllTarjeta();
 	}
 
@@ -248,7 +248,7 @@ public class InventarioController {
 	 * @return
 	 */
 	@GetMapping("/inventarios/estatusRem")
-	public List<EstatusRemolque> listarEstatusRem() {
+	public List<EstatusRemolque> lstEstatusRem() {
 		return inventarioService.findAllEstatusRemolque();
 	}
 	
@@ -257,7 +257,7 @@ public class InventarioController {
 	 * @return
 	 */
 	@GetMapping("/inventarios/estatusInv")
-	public List<EstatusInventario> listarEstatusInv() {
+	public List<EstatusInventario> lstEstatusInv() {
 		return inventarioService.findAllEstatusInventario();
 	}
 
@@ -281,10 +281,10 @@ public class InventarioController {
 		Inventarios remolqueActual = inventarioService.findByIdRemolque(idRemolque);
 		Map<String, Object> response = new HashMap<>();
 		if (result.hasErrors()) {
-			List<String> errors = result.getFieldErrors().stream().map(err -> {
+			List<String> lstErrors = result.getFieldErrors().stream().map(err -> {
 				return "El campo '" + err.getField() + "' " + err.getDefaultMessage();
 			}).collect(Collectors.toList());
-			response.put("errors", errors);
+			response.put("errors", lstErrors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		if (remolqueActual == null) {
