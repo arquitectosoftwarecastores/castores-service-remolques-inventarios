@@ -198,8 +198,8 @@ public class InventarioController {
 			if (existingRemolque != null) {
 				// Actualiza el estatus del registro existente
 				EstatusRemolque estatus = new EstatusRemolque();
-				estatus.setId(2L); // Asigna el id correspondiente al estatus
-				existingRemolque.setEstatusRem(estatus);
+				estatus.setIdEstatusRemolque(2L); // Asigna el id correspondiente al estatus
+				existingRemolque.setEstatusRemolque(estatus);
 				inventarioService.update(existingRemolque);
 			}
 			inventarios.setIdRemolque(null);
@@ -296,8 +296,8 @@ public class InventarioController {
 			// Verificar si el registro ya existe en la base de datos
 			if (remolqueActual != null) {
 				EstatusRemolque estatus = new EstatusRemolque();
-				estatus.setId(2L); // Asigna el id correspondiente al estatus
-				remolqueActual.setEstatusRem(estatus);
+				estatus.setIdEstatusRemolque(2L); // Asigna el id correspondiente al estatus
+				remolqueActual.setEstatusRemolque(estatus);
 				inventarioService.update(remolqueActual);
 			}
 			inventarios.setIdRemolque(null);

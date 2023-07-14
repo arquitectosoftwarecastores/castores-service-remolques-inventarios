@@ -101,7 +101,7 @@ public class Inventarios implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "estatus_id")
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	private EstatusRemolque estatusRem;
+	private EstatusRemolque estatusRemolque;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "estatus_inv")
