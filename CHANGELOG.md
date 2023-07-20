@@ -1,6 +1,6 @@
 # castores-service-remolques-inventarios
 
-- __Versión:__ 1.0.0.0
+## Versión: 1.0.0.0
 - __Ticket/Proyecto:__ Intercambio de Remolques
 - __Author:__ Tavera Godinez Zyanya Guadalupe
 - __Fecha:__ 15/06/2023
