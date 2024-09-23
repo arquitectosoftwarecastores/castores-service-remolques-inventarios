@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*
 * Título                    : Inventarios
@@ -32,6 +33,7 @@ import lombok.Data;
 @Entity
 @Table(name = "remolques_inventarios")
 @Data
+@NoArgsConstructor
 public class Inventarios implements Serializable {
 
 	private static final long serialVersionUID = -889490748904568208L;

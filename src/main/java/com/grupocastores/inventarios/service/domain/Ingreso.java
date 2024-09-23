@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*
 * Título                    : Ingreso
@@ -23,6 +24,7 @@ import lombok.Data;
 @Entity
 @Table(name = "remolques_ingreso")
 @Data
+@NoArgsConstructor
 public class Ingreso implements Serializable {
 
 	@Id
