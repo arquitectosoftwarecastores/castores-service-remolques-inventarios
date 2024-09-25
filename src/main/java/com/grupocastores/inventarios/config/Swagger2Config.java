@@ -2,6 +2,7 @@ package com.grupocastores.inventarios.config;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
+	
+	@Value("${globales.version}")
+	private String version;
 
     @Bean
     public Docket infoApiAvailabilityHub() {
@@ -31,7 +35,7 @@ public class Swagger2Config {
                 .description("Documentation and client for inventarios")
                 .termsOfServiceUrl("Castores-TI")
                 .license("com.grupocastores")
-                .version("1.0.0.0")
+                .version(version)
                 .build();
     }
 }
