@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(value = "/version")
 @Api(value = "VersionController", produces = "application/json")
-public class inventarioVersionController {
+public class VersionController {
 
 	@Value("${spring.profiles.active:Unknown}")
 	private String activeProfile;

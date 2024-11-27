@@ -17,15 +17,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupocastores.inventarios.dto.inventariosDTO;
 import com.grupocastores.inventarios.service.IInventarioService;
+import com.grupocastores.inventarios.service.IRemolquesService;
 import com.grupocastores.inventarios.service.domain.Estatus;
 import com.grupocastores.inventarios.service.domain.EstatusInventario;
 import com.grupocastores.inventarios.service.domain.EstatusRemolque;
 import com.grupocastores.inventarios.service.domain.Ingreso;
 import com.grupocastores.inventarios.service.domain.Inventarios;
+import com.grupocastores.inventarios.service.domain.Remolques;
 import com.grupocastores.inventarios.service.domain.Tarjeta;
 
 import io.swagger.annotations.Api;
@@ -44,6 +48,7 @@ import io.swagger.annotations.ApiResponses;
 */
 
 @RestController
+@RequestMapping(value = "/inventarios")
 @Api(value = "InventarioController", produces = "application/json")
 public class InventarioController {
 	
@@ -52,18 +57,23 @@ public class InventarioController {
 	 */
 	@Autowired
 	IInventarioService inventarioService;
+	
+	@Autowired
+	IRemolquesService remolquesService;
 
 	private Inventarios inventarios;
 	
-	@ApiOperation(value = "Recupera inventarios", tags = { "Controlador inventarios" })
-	@ApiResponses(value = { 
-	@ApiResponse(code = 200, message = "inventarios obtenidos", response = inventariosDTO.class), 
-	@ApiResponse(code = 404, message = "No encontrados") })
+	
 	/**
 	 * Obtener todos los inventarios
 	 * @return
 	 */
-	@GetMapping("/inventarios")
+	@ApiOperation(value = "Recupera lista de inventarios")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontrados"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/all")
 	public List<Inventarios> lstInventarios() {
 		return inventarioService.findAll();
 	}
@@ -80,7 +90,12 @@ public class InventarioController {
 	 * @param idRemolque
 	 * @return
 	 */
-	@GetMapping("/inventarios/{idRemolque}")
+	@ApiOperation(value = "Recupera lista de inventarios por idRemolque")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de inventarios por idRemolque", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontrados"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/{idRemolque}")
 	public ResponseEntity<?> show(@PathVariable Long idRemolque) {
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -111,7 +126,12 @@ public class InventarioController {
 	 * @param numRemolque
 	 * @return
 	 */
-	@GetMapping("/inventarios/remolque/{numRemolque}")
+	@ApiOperation(value = "Recupera lista de inventarios por noEconomico")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de inventarios por noEconomico", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontrados"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/remolque/{numRemolque}")
 	public ResponseEntity<?> ver(@PathVariable String numRemolque) {
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -142,7 +162,12 @@ public class InventarioController {
 	 * @param clave
 	 * @return
 	 */
-	@GetMapping("/inventarios/clave/{clave}")
+	@ApiOperation(value = "Recupera lista de inventarios por clave")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de inventarios por clave", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontrados"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/clave/{clave}")
 	public ResponseEntity<?> show(@PathVariable String clave) {
 		Map<String, Object> response = new HashMap<>();
 		List<Inventarios> lstInventarios = new ArrayList<>();
@@ -177,7 +202,12 @@ public class InventarioController {
 	 * @param result
 	 * @return
 	 */
-	@PostMapping("/inventarios")
+	@ApiOperation(value = "Agregar un nuevo inventario a la lista")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Agregar Lista de inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontrados"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@PostMapping("/agregar")
 	public ResponseEntity<?> createOrUpdate(@Validated @RequestBody Inventarios inventarios, BindingResult result) {
 		Inventarios newRemolque = null;
 		Map<String, Object> response = new HashMap<>();
@@ -220,7 +250,12 @@ public class InventarioController {
 	 * Obtener lista de ingreso
 	 * @return
 	 */
-	@GetMapping("/inventarios/ingreso")
+	@ApiOperation(value = "Recupera lista de ingreso por inventarios")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de ingreso por inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontradas"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/ingreso")
 	public List<Ingreso> lstIngreso() {
 		return inventarioService.findAllIngreso();
 	}
@@ -229,7 +264,12 @@ public class InventarioController {
 	 * Obtener lista de estatus
 	 * @return
 	 */
-	@GetMapping("/inventarios/estatus")
+	@ApiOperation(value = "Recupera lista de estatus por inventarios")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de estatus por inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontradas"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/estatus")
 	public List<Estatus> lstEstatus() {
 		return inventarioService.findAllEstatus();
 	}
@@ -238,7 +278,12 @@ public class InventarioController {
 	 * Obtener lista de tarjeta
 	 * @return
 	 */
-	@GetMapping("/inventarios/tarjeta")
+	@ApiOperation(value = "Recupera lista de tarjeta por inventarios")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de tarjeta por inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontradas"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/tarjeta")
 	public List<Tarjeta> lstTarjeta() {
 		return inventarioService.findAllTarjeta();
 	}
@@ -247,7 +292,12 @@ public class InventarioController {
 	 * Obtener lista de estatus remolque
 	 * @return
 	 */
-	@GetMapping("/inventarios/estatusRem")
+	@ApiOperation(value = "Recupera lista de estatus Remolques por inventarios")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de estatus Remolques por inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontradas"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/estatusRem")
 	public List<EstatusRemolque> lstEstatusRem() {
 		return inventarioService.findAllEstatusRemolque();
 	}
@@ -256,7 +306,12 @@ public class InventarioController {
 	 * Obtener lista de estatus inventario
 	 * @return
 	 */
-	@GetMapping("/inventarios/estatusInv")
+	@ApiOperation(value = "Recupera lista de estatus Inventarios por inventarios")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Lista de estatus Inventarios por inventarios", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontradas"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@GetMapping("/estatusInv")
 	public List<EstatusInventario> lstEstatusInv() {
 		return inventarioService.findAllEstatusInventario();
 	}
@@ -275,7 +330,12 @@ public class InventarioController {
 	 * @param idRemolque
 	 * @return
 	 */
-	@PutMapping("/inventarios/{idRemolque}")
+	@ApiOperation(value = "Se edita algun inventario")
+	@ApiResponses(value = { //
+	@ApiResponse(code = 200, message = "Se edita algun inventario por su ID", response = inventariosDTO.class),
+	@ApiResponse(code = 404, message = "No encontradas"),
+	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
+	@PutMapping("/{idRemolque}")
 	public ResponseEntity<?> update(@RequestBody Inventarios inventarios, BindingResult result,
 			@PathVariable Long idRemolque) {
 		Inventarios remolqueActual = inventarioService.findByIdRemolque(idRemolque);
@@ -311,5 +371,11 @@ public class InventarioController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping(value = "/remolques/{noEconomico}")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public List <Remolques> findByOficina(@PathVariable String noEconomico){
+		return remolquesService.findByRemolques("PRODUCCION13", noEconomico);
 	}
 }
