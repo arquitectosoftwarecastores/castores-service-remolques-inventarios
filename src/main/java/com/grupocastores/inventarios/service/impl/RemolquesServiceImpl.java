@@ -16,7 +16,7 @@ public class RemolquesServiceImpl implements IRemolquesService{
 	
 	@PersistenceContext
 	private EntityManager entityManager;
-	static final String queryRemolques =
+	static final String queryNegociaciones =
 			"SELECT * FROM OPENQUERY (%s, 'SELECT r.idremolque, r.noserie, r.placas, r.modelo, r.noeconomico "
 			+ "FROM camiones.remolques r "
 			+ "WHERE r.status=1 AND r.noeconomico= %s "
@@ -27,7 +27,7 @@ public class RemolquesServiceImpl implements IRemolquesService{
 		try 
 		{
 			Query query = entityManager.createNativeQuery(String.format(
-					queryRemolques,
+					queryNegociaciones,
 					linkedServer,
 					noEconomico
 				), Remolques.class);	

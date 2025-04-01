@@ -173,7 +173,7 @@ public class InventarioController {
 		List<Inventarios> lstInventarios = new ArrayList<>();
 
 		try {
-			if (clave.equals("1100")) {
+			if (clave.equals("1100") || clave.equals("1107")) {
 				lstInventarios = inventarioService.findAll();
 			} else {
 				lstInventarios = inventarioService.findByClaveRemolque(clave);
