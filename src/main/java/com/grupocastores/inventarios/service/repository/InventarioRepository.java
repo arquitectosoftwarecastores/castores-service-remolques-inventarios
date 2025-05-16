@@ -28,7 +28,7 @@ public interface InventarioRepository extends JpaRepository<Inventarios, Long> {
 
 	public Inventarios findByIdRemolque(int idRemolque);
 	
-	@Query(value = "SELECT * FROM remolques_inventarios u WHERE u.folio = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM remolques_inventarios u WHERE u.folio = ?1 AND estatus_id = 1", nativeQuery = true)
 	public Inventarios findByRemolque(String folio);
 
 	@Query(value = "SELECT u FROM remolques_inventarios u WHERE u.idRemolque=?1", nativeQuery = true)

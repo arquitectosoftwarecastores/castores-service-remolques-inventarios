@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -63,6 +65,9 @@ public class InventarioController {
 
 	private Inventarios inventarios;
 	
+	private static Logger log = LoggerFactory.getLogger(InventarioController.class);
+	
+	static final String HEADERBACK = "/inventarios";
 	
 	/**
 	 * Obtener todos los inventarios
@@ -136,18 +141,11 @@ public class InventarioController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			inventarios = inventarioService.findByNumRemolque(numRemolque);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar la consulta en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Inventarios>(inventarios, HttpStatus.OK);
+		} catch (Exception excepcion) {
+			//log.error(HEADERBACK, excepcion);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(excepcion);
 		}
-		if (inventarios == null) {
-			response.put("mensaje",
-					"El remolque: ".concat(numRemolque.toString().concat(" no existe en la base de datos")));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<Inventarios>(inventarios, HttpStatus.OK);
 	}
 
 	/**
@@ -211,13 +209,6 @@ public class InventarioController {
 	public ResponseEntity<?> createOrUpdate(@Validated @RequestBody Inventarios inventarios, BindingResult result) {
 		Inventarios newRemolque = null;
 		Map<String, Object> response = new HashMap<>();
-		if (result.hasErrors()) {
-			List<String> lstErrors = result.getFieldErrors().stream().map(err -> {
-				return "El campo '" + err.getField() + "' " + err.getDefaultMessage();
-			}).collect(Collectors.toList());
-			response.put("errors", lstErrors);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-		}
 		try {
 			Inventarios existingRemolque;
 			if (inventarios.getIdRemolque() == null) {
@@ -235,14 +226,11 @@ public class InventarioController {
 			inventarios.setIdRemolque(null);
 			
 			newRemolque = inventarioService.save(inventarios);
-			response.put("mensaje", "El remolque ha sido agregado con éxito");
-			response.put("inventarios", newRemolque);
 
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar el insert o update en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception excepcion) {
+			log.error(HEADERBACK, excepcion);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(excepcion);
 		}
 	}
 
