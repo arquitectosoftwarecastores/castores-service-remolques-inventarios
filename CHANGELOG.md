@@ -6,4 +6,5 @@
 - __Fecha:__ 15/06/2023
 - __Descripción:__ Se crea MS para el modulo de inventarios, para visualizar entradas y salidas de los remolques por oficina con su información correspondiente.
 				-refactor: eliminar código innecesario y modificar query en archivo Repository.
+				-chore: eliminar código comentado innecesario.
 ----------------

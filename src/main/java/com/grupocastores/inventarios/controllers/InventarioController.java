@@ -143,7 +143,6 @@ public class InventarioController {
 			inventarios = inventarioService.findByNumRemolque(numRemolque);
 			return new ResponseEntity<Inventarios>(inventarios, HttpStatus.OK);
 		} catch (Exception excepcion) {
-			//log.error(HEADERBACK, excepcion);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(excepcion);
 		}
 	}
