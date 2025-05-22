@@ -1,6 +1,7 @@
 package com.grupocastores.inventarios.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,7 +66,7 @@ public class InventarioController {
 
 	private Inventarios inventarios;
 	
-	private static Logger log = LoggerFactory.getLogger(InventarioController.class);
+	private static Logger logger = LoggerFactory.getLogger(InventarioController.class);
 	
 	static final String HEADERBACK = "/inventarios";
 	
@@ -80,7 +81,12 @@ public class InventarioController {
 	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
 	@GetMapping("/all")
 	public List<Inventarios> lstInventarios() {
-		return inventarioService.findAll();
+	    try {
+	        return inventarioService.findAll();
+	    } catch (Exception e) {
+	        logger.error("Error al obtener la lista de inventarios", e);
+	        return Collections.emptyList();
+	    }
 	}
 
 	/**
@@ -216,9 +222,8 @@ public class InventarioController {
 				existingRemolque = inventarioService.findByNumRemolque(inventarios.getNumRemolque());
 			}
 			if (existingRemolque != null) {
-				// Actualiza el estatus del registro existente
 				EstatusRemolque estatus = new EstatusRemolque();
-				estatus.setIdEstatusRemolque(2L); // Asigna el id correspondiente al estatus
+				estatus.setIdEstatusRemolque(2L);
 				existingRemolque.setEstatusRemolque(estatus);
 				inventarioService.update(existingRemolque);
 			}
@@ -228,7 +233,7 @@ public class InventarioController {
 
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		} catch (Exception excepcion) {
-			log.error(HEADERBACK, excepcion);
+			logger.error(HEADERBACK, excepcion);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(excepcion);
 		}
 	}
@@ -244,7 +249,12 @@ public class InventarioController {
 	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
 	@GetMapping("/ingreso")
 	public List<Ingreso> lstIngreso() {
-		return inventarioService.findAllIngreso();
+	    try {
+	        return inventarioService.findAllIngreso();
+	    } catch (Exception e) {
+	        logger.error("Error al obtener la lista de ingresos", e);
+	        return Collections.emptyList();
+	    }
 	}
 
 	/**
@@ -258,7 +268,12 @@ public class InventarioController {
 	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
 	@GetMapping("/estatus")
 	public List<Estatus> lstEstatus() {
-		return inventarioService.findAllEstatus();
+	    try {
+	        return inventarioService.findAllEstatus();
+	    } catch (Exception e) {
+	        logger.error("Error al obtener la lista de estatus", e);
+	        return Collections.emptyList();
+	    }
 	}
 
 	/**
@@ -272,7 +287,12 @@ public class InventarioController {
 	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
 	@GetMapping("/tarjeta")
 	public List<Tarjeta> lstTarjeta() {
-		return inventarioService.findAllTarjeta();
+	    try {
+	        return inventarioService.findAllTarjeta();
+	    } catch (Exception e) {
+	        logger.error("Error al obtener la lista de tarjetas", e);
+	        return Collections.emptyList();
+	    }
 	}
 
 	/**
@@ -286,9 +306,13 @@ public class InventarioController {
 	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
 	@GetMapping("/estatusRem")
 	public List<EstatusRemolque> lstEstatusRem() {
-		return inventarioService.findAllEstatusRemolque();
+	    try {
+	        return inventarioService.findAllEstatusRemolque();
+	    } catch (Exception e) {
+	        logger.error("Error al obtener la lista de estatus de remolques", e);
+	        return Collections.emptyList();
+	    }
 	}
-	
 	/**
 	 * Obtener lista de estatus inventario
 	 * @return
@@ -300,7 +324,12 @@ public class InventarioController {
 	@ApiResponse(code = 500, message = "Error Inesperado", response = Exception.class) })
 	@GetMapping("/estatusInv")
 	public List<EstatusInventario> lstEstatusInv() {
-		return inventarioService.findAllEstatusInventario();
+	    try {
+	        return inventarioService.findAllEstatusInventario();
+	    } catch (Exception e) {
+	        logger.error("Error al obtener la lista de estatus de inventario", e);
+	        return Collections.emptyList();
+	    }
 	}
 
 	/**
@@ -340,10 +369,9 @@ public class InventarioController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		try {
-			// Verificar si el registro ya existe en la base de datos
 			if (remolqueActual != null) {
 				EstatusRemolque estatus = new EstatusRemolque();
-				estatus.setIdEstatusRemolque(2L); // Asigna el id correspondiente al estatus
+				estatus.setIdEstatusRemolque(2L);
 				remolqueActual.setEstatusRemolque(estatus);
 				inventarioService.update(remolqueActual);
 			}
@@ -362,7 +390,13 @@ public class InventarioController {
 	
 	@GetMapping(value = "/remolques/{noEconomico}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public List <Remolques> findByOficina(@PathVariable String noEconomico){
-		return remolquesService.findByRemolques("PRODUCCION13", noEconomico);
+	public List<Remolques> findByOficina(@PathVariable String noEconomico) {
+	    try {
+	        return remolquesService.findByRemolques("PRODUCCION13", noEconomico);
+	    } catch (Exception e) {
+	        logger.error("Error al buscar remolques con código 'PRODUCCION13' y número económico: " + noEconomico, e);
+	        return Collections.emptyList();
+	    }
 	}
+
 }

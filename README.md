@@ -8,6 +8,7 @@
     - Se crea MS para el modulo de inventarios, para visualizar entradas y salidas de los remolques por oficina con su información correspondiente.
 	-refactor: eliminar código innecesario y modificar query en archivo Repository.
 	-chore: eliminar código comentado innecesario.
+	-refactor: añadir manejo de errores con try-catch en endpoints.
 --------
 
 ## Configuración técnica
