@@ -9,6 +9,7 @@
 	-refactor: eliminar código innecesario y modificar query en archivo Repository.
 	-chore: eliminar código comentado innecesario.
 	-refactor: añadir manejo de errores con try-catch en endpoints.
+	-feat: agregar ResponseDTO y usarlo en endpoints para manejar errores.
 --------
 
 ## Configuración técnica
